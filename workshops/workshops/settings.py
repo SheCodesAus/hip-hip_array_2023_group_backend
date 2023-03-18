@@ -27,12 +27,17 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication'
+    ]
+}
 
 # Application definition
 
 INSTALLED_APPS = [
     'workshopsApp.apps.WorkshopsappConfig',
-    'rest_framework',
+    'rest_framework',    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -2,7 +2,6 @@ from django.db import models
 
 # Create your models here.
 class Workshop(models.Model):
-
     '''align the attribute names in 'skills' with Bunny's names'''
     class Skills(models.TextChoices):
         Python = "Python"
@@ -14,6 +13,7 @@ class Workshop(models.Model):
         max_length=20,
         choices=Skills.choices,
     )
+    '''see above - reminder to check class Skills with Bunny'''
     title = models.CharField(
         max_length=200,
     )
@@ -21,7 +21,7 @@ class Workshop(models.Model):
     description = models.TextField()
     image = models.TextField()
     created_at = models.DateTimeField(
-        auto_now_add=True,
+        auto_now_add=True
     )
     is_open = models.BooleanField()
     current_mentor_num = models.IntegerField(
