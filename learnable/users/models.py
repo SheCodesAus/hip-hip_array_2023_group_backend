@@ -3,32 +3,25 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
-    username = None
+    username = models.EmailField(unique=True, null=True)
     last_login = None
     first_name = models.CharField(max_length=300)
     last_name = models.CharField(max_length=300)
-    email = models.EmailField(('email address'), unique=True)
-    password = models.CharField(max_length=1000)
-    USERNAME_FIELD = 'email'
+    password = models.CharField(max_length=1000, null=True)
+    USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = []
 
     skills_choices = (
-        ("PY", "Python"),
-        ("DJ", "Django"),
-        ("RE", "React"),
-        ("JS", "JavaScript"),
-        ("HT", "HTML/CSS"),
+        ("python", "Python"),
+        ("django", "Django"),
+        ("react", "React"),
+        ("javascript", "JavaScript"),
+        ("htmlcss", "HTML/CSS"),
     )
 
     skills = models.CharField(max_length=100,
-                             choices=skills_choices,
-                             default=None)
-    # class Skill(models.TextChoices):
-    #     PY = "Python"
-    #     DJ = "Django"
-    #     RE = "React"
-    #     JS = "JavaScript"
-    #     HT = "HTML/CSS"
+                              choices=skills_choices,
+                              default=None, blank=True, null=True)
 
     def __str__(self):
         return self.user
