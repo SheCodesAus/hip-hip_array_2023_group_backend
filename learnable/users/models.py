@@ -24,4 +24,4 @@ class User(AbstractUser):
                               default=None, blank=True, null=True)
 
     def __str__(self):
-        return self.user
+        return self.username
