@@ -20,3 +20,16 @@ class UserList(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors)
+
+
+class UserDetail(APIView):
+    def get_object(self, pk):
+        try:
+            return User.objects.get(pk=pk)
+        except User.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk):
+        user = self.get_object(pk)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
