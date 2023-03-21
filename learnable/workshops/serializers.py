@@ -22,7 +22,7 @@ class WorkshopSerializer(serializers.Serializer):
     
     skills = serializers.ChoiceField(choices=skills_choices) ##check skill's max length with what Bunny has
     ### multipleChoiceField(choices=skills_choices) OR choiceField
-    # owner = serializers.CharField(max_length=200) ##check owner's max length with what Bunny has
+    owner = serializers.CharField(max_length=200) ##check owner's max length with what Bunny has
 
     def create(self,validated_data):
         return Workshop.objects.create(**validated_data)

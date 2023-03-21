@@ -1,5 +1,5 @@
 from django.db import models
-# from django.contrib.auth import User
+from django.contrib.auth import User
 
 # Create your models here.
 class Workshop(models.Model):
@@ -34,8 +34,8 @@ class Workshop(models.Model):
     max_mentor_num = models.IntegerField()
 
     '''align with Bunny's user.app to do the below'''
-    # owner_id = models.ForeignKey(
-    #     User,
-    #     on_delete=models.CASCADE,
-    #     related_name="workshop_owner",
-    # )
+    owner_id = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="workshop_owner",
+    )
