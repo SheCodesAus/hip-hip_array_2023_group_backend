@@ -39,3 +39,15 @@ class Workshop(models.Model):
         on_delete=models.CASCADE,
         related_name="workshop_owner",
     )
+
+    @property 
+    def current_mentor_num(self):
+        mentor_num = 0
+        for mentor in self.workshop.all():
+            mentor_num += mentor.amount
+        return mentor_num
+            
+    @current_mentor_num.setter
+    def current_mentor_num(self, value):
+        pass
+
