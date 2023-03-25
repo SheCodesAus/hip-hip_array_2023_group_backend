@@ -28,3 +28,15 @@ class WorkshopSerializer(serializers.Serializer):
         return Workshop.objects.create(**validated_data)
 
 # class WorkshopDetailSerializer(serializers.Serializer):
+class WorkshopDetailSerializer(serializers.Serializer):
+    def update(self, instance, validated_data):
+        instance.title = validated_data.get('title', instance.title)
+        instance.workshop_date = validated_data.get('workshop_date', instance.workshop_date)
+        instance.description = validated_data.get('description', instance.description)
+        instance.image = validated_data.get('image', instance.image)
+        instance.created_at = validated_data.get('created_at', instance.created_at)
+        instance.is_open = validated_data.get('is_open', instance.is_open)
+        instance.current_mentor_num = validated_data.get('current_mentor_num', instance.current_mentor_num)
+        instance.max_mentor_num = validated_data.get('max_mentor_num', instance.max_mentor_num)
+        instance.save()
+        return instance

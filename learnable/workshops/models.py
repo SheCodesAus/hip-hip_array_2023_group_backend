@@ -33,6 +33,21 @@ class Workshop(models.Model):
     )
     max_mentor_num = models.IntegerField()
 
+    # @property
+    # def current_mentor_num(self):
+    #     new_val = self.current_mentor_num + 1
+    #     return new_val
+
+
+        # mentor_num = 0
+        # for mentor in self.workshops.all():
+        #     mentor_num += mentor.amount
+        # return mentor_num
+            
+#     @current_mentor_num.setter
+#     def current_mentor_num(self, value):
+#         pass
+
     '''align with Bunny's user.app to do the below'''
     # owner_id = models.ForeignKey(
     #     User,
