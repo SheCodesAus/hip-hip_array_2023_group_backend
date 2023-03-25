@@ -2,12 +2,14 @@ from rest_framework import serializers
 from .models import User
 
 
-class UserSerializer(serializers.Serializer):
-    id = serializers.ReadOnlyField()
+class UserSerializer(serializers.ModelSerializer):
     username = serializers.EmailField()
-    first_name = serializers.CharField(max_length=300)
-    last_name = serializers.CharField(max_length=300)
-    password = serializers.CharField(max_length=1000)
+
+    class Meta:
+        model = User
+        fields = [
+            'id', 'username', 'first_name', 'last_name', 'password'
+        ]
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
