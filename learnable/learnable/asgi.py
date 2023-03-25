@@ -1,5 +1,5 @@
 """
-ASGI config for workshops project.
+ASGI config for learnable project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
