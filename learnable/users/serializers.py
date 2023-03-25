@@ -4,11 +4,16 @@ from .models import User
 
 class UserSerializer(serializers.ModelSerializer):
     username = serializers.EmailField()
+    # is_python_mentor = serializers.BooleanField(default=False)
+    # is_django_mentor = serializers.BooleanField(default=False)
+    # is_react_mentor = serializers.BooleanField()
+    # is_javascript_mentor = serializers.BooleanField()
+    # is_htmlcss_mentor = serializers.BooleanField()
 
     class Meta:
         model = User
         fields = [
-            'id', 'username', 'first_name', 'last_name', 'password'
+            'id', 'username', 'first_name', 'last_name', 'password', 'is_python_mentor', 'is_django_mentor', 'is_react_mentor', 'is_javascript_mentor', 'is_htmlcss_mentor'
         ]
 
     def create(self, validated_data):
