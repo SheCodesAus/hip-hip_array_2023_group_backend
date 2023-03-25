@@ -1,0 +1,37 @@
+[
+    {
+      "model": "users.skill",
+      "pk": 1,
+      "fields": {
+        "name": "python"
+      }
+    },
+    {
+        "model": "users.skill",
+        "pk": 2,
+        "fields": {
+          "name": "django"
+        }
+      },
+      {
+        "model": "users.skill",
+        "pk": 3,
+        "fields": {
+          "name": "react"
+        }
+      },
+      {
+        "model": "users.skill",
+        "pk": 4,
+        "fields": {
+          "name": "javascript"
+        }
+      },
+      {
+        "model": "users.skill",
+        "pk": 5,
+        "fields": {
+          "name": "htmlcss"
+        }
+      }
+]
