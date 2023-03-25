@@ -4,11 +4,6 @@ from .models import User
 
 class UserSerializer(serializers.ModelSerializer):
     username = serializers.EmailField()
-    # is_python_mentor = serializers.BooleanField(default=False)
-    # is_django_mentor = serializers.BooleanField(default=False)
-    # is_react_mentor = serializers.BooleanField()
-    # is_javascript_mentor = serializers.BooleanField()
-    # is_htmlcss_mentor = serializers.BooleanField()
 
     class Meta:
         model = User
