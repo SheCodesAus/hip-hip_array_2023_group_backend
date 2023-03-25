@@ -11,17 +11,5 @@ class User(AbstractUser):
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = []
 
-    skills_choices = (
-        ("python", "Python"),
-        ("django", "Django"),
-        ("react", "React"),
-        ("javascript", "JavaScript"),
-        ("htmlcss", "HTML/CSS"),
-    )
-
-    skills = models.CharField(max_length=100,
-                              choices=skills_choices,
-                              default=None, blank=True, null=True)
-
     def __str__(self):
         return self.username

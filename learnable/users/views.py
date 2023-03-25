@@ -9,7 +9,6 @@ from .permissions import IsOwner
 
 
 class UserList(APIView):
-    # TODO: add permission so only admin can view list
     def get(self, request):
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
