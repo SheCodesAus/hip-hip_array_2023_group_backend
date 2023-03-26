@@ -30,29 +30,29 @@ class Workshop(models.Model):
         auto_now_add=True
     )
     is_open = models.BooleanField()
-    current_mentor_num = models.IntegerField(
-        default = 0
-    )
+    # current_mentor_num = models.IntegerField(
+    #     default = 0
+    # )
     max_mentor_num = models.IntegerField()
 
-    # @property
-    # def current_mentor_num(self):
-    #     new_val = self.current_mentor_num + 1
-    #     return new_val
+    @property
+    def current_mentor_num(self):
+    #    return self.current_mentor_num.count()
+       
+        # new_val = self.current_mentor_num + 1
+        # return new_val
 
-
-        # mentor_num = 0
-        # for mentor in self.workshops.all():
-        #     mentor_num += mentor.amount
-        # return mentor_num
+        mentor_num = 0
+        for mentor in self.workshops.all():
+            mentor_num += mentor.amount
+        return mentor_num
             
-#     @current_mentor_num.setter
-#     def current_mentor_num(self, value):
-#         pass
+    @current_mentor_num.setter
+    def current_mentor_num(self, value):
+        pass
 
-    '''align with Bunny's user.app to do the below'''
-    owner_id = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name="workshop_owner",
-    )
+    # owner = models.ForeignKey(
+    #     User,
+    #     on_delete=models.CASCADE,
+    #     related_name="workshop_owner",
+    # ) 

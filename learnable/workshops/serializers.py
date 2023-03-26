@@ -9,9 +9,9 @@ class WorkshopSerializer(serializers.Serializer):
     image = serializers.URLField()
     created_at = serializers.DateTimeField(read_only=True)
     is_open = serializers.BooleanField()
-    current_mentor_num = serializers.IntegerField()
+    # current_mentor_num = serializers.IntegerField()
+    current_mentor_num = serializers.ReadOnlyField()
     max_mentor_num = serializers.IntegerField()
-
     skills_choices = (
         ("python", "Python"),
         ("django", "Django"),
@@ -19,10 +19,9 @@ class WorkshopSerializer(serializers.Serializer):
         ("javascript", "JavaScript"),
         ("htmlcss", "HTML/CSS"),
     )
-    
     skills = serializers.ChoiceField(choices=skills_choices) ##check skill's max length with what Bunny has
     ### multipleChoiceField(choices=skills_choices) OR choiceField
-    # owner = serializers.CharField(max_length=200) ##check owner's max length with what Bunny has
+    # owner = serializers.ReadOnlyField(source='owner.id')
 
     def create(self,validated_data):
         return Workshop.objects.create(**validated_data)
@@ -38,5 +37,6 @@ class WorkshopDetailSerializer(serializers.Serializer):
         instance.is_open = validated_data.get('is_open', instance.is_open)
         instance.current_mentor_num = validated_data.get('current_mentor_num', instance.current_mentor_num)
         instance.max_mentor_num = validated_data.get('max_mentor_num', instance.max_mentor_num)
+        # instance.owner = validated_data.get('owner', instance.owner)
         instance.save()
         return instance

@@ -40,22 +40,22 @@ class WorkshopDetail(APIView):
         serializer = WorkshopSerializer(workshop)
         return Response(serializer.data)
 
-    def put(self, request, workshop_pk):
-        workshop = self.get_object(workshop_pk)
-        data = request.data
-        serializer = WorkshopDetailSerializer(
-            instance=workshop,
-            data=data,
-            partial=True
-        )
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors)
+    # def put(self, request, workshop_pk):
+    #     workshop = self.get_object(workshop_pk)
+    #     data = request.data
+    #     serializer = WorkshopDetailSerializer(
+    #         instance=workshop,
+    #         data=data,
+    #         partial=True
+    #     )
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data)
+    #     return Response(serializer.errors)
 
-    def delete(self, request, workshop_pk):
-        workshop = self.get_object(workshop_pk)
-        if workshop.owner == request.user:
-            workshop.delete()
-            return Response({"result":"workshop has been deleted"})
-        return Response({"result":"Unsuccessful - Workshop can only be deleted by the owner."})
+    # def delete(self, request, workshop_pk):
+    #     workshop = self.get_object(workshop_pk)
+    #     if workshop.owner == request.user:
+    #         workshop.delete()
+    #         return Response({"result":"workshop has been deleted"})
+    #     return Response({"result":"Unsuccessful - Workshop can only be deleted by the owner."})

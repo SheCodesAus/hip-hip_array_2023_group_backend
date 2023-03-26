@@ -33,7 +33,7 @@ REST_FRAMEWORK = {
     ]
 }
 
-# AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'users.User'
 
 # Application definition
 
@@ -56,6 +56,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ]
 }
+
 AUTH_USER_MODEL = 'users.User'
 
 MIDDLEWARE = [
