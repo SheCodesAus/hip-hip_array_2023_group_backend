@@ -9,7 +9,7 @@ class WorkshopSerializer(serializers.Serializer):
     image = serializers.URLField()
     created_at = serializers.DateTimeField(read_only=True)
     is_open = serializers.BooleanField()
-    mentor_num = serializers.IntegerField()
+    # mentor_num = serializers.IntegerField()
     current_mentor_num = serializers.ReadOnlyField()
     max_mentor_num = serializers.IntegerField()
     skills_choices = (
