@@ -10,6 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'username', 'first_name', 'last_name', 'password', 'is_python_mentor', 'is_django_mentor', 'is_react_mentor', 'is_javascript_mentor', 'is_htmlcss_mentor'
         ]
+        id = serializers.ReadOnlyField()
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
