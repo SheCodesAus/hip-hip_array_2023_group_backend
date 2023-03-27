@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.db.models import Count
 
 User = get_user_model() 
 
@@ -30,29 +31,23 @@ class Workshop(models.Model):
         auto_now_add=True
     )
     is_open = models.BooleanField()
-    current_mentor_num = models.IntegerField(
-        default = 0
-    )
+    mentor_num = models.IntegerField()
     max_mentor_num = models.IntegerField()
 
-    # @property
-    # def current_mentor_num(self):
-    # #    return self.current_mentor_num.count()
-       
-    #     # new_val = self.current_mentor_num + 1
-    #     # return new_val
+    @property
+    def current_mentor_num(self):
+        return self.workshop.objects.aggregate(Count('mentor_num'))
 
-    #     mentor_num = 0
-    #     for mentor in self.workshops.all():
-    #         mentor_num += mentor.amount
-    #     return mentor_num
-            
-    # @current_mentor_num.setter
-    # def current_mentor_num(self, value):
-    #     pass
+    @current_mentor_num.setter
+    def current_mentor_num(self, value):
+        pass
 
-    # owner = models.ForeignKey(
-    #     User,
-    #     on_delete=models.CASCADE,
-    #     related_name="workshop_owner",
-    # ) 
+    owner = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="workshop_owner",
+    ) 
+
+    class WorkshopMentor(models.Model):
+        workshop_mentor = models.ManyToManyField('users_mentor')
+     

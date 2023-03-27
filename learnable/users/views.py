@@ -23,15 +23,15 @@ class UserList(APIView):
 
 
 class UserDetail(APIView):
-    # permission_classes = [
-    #     permissions.IsAuthenticated,
-    #     IsOwner
-    # ]
+    permission_classes = [
+        permissions.IsAuthenticated,
+        IsOwner
+    ]
 
     def get_object(self, pk):
         try:
             user = User.objects.get(pk=pk)
-            # self.check_object_permissions(self.request, user)
+            self.check_object_permissions(self.request, user)
             return user
         except User.DoesNotExist:
             raise Http404
