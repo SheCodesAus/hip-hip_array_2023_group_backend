@@ -31,16 +31,16 @@ class Workshop(models.Model):
         auto_now_add=True
     )
     is_open = models.BooleanField()
-    mentor_num = models.IntegerField()
+    current_mentor_num = models.IntegerField()
     max_mentor_num = models.IntegerField()
 
-    @property
-    def current_mentor_num(self):
-        return self.workshop.objects.aggregate(Count('mentor_num'))
+    # @property
+    # def current_mentor_num(self):
+    #     return self.workshop.objects.aggregate(Count('mentor_num'))
 
-    @current_mentor_num.setter
-    def current_mentor_num(self, value):
-        pass
+    # @current_mentor_num.setter
+    # def current_mentor_num(self, value):
+    #     pass
 
     owner = models.ForeignKey(
         User,
@@ -48,6 +48,6 @@ class Workshop(models.Model):
         related_name="workshop_owner",
     ) 
 
-    class WorkshopMentor(models.Model):
-        workshop_mentor = models.ManyToManyField('users_mentor')
+    # class WorkshopMentor(models.Model):
+    #     workshop_mentor = models.ManyToManyField('users_mentor')
      

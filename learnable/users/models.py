@@ -17,5 +17,5 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
 
-class UsersMentor(models.Model):
-        users_mentor = models.ManyToManyField('workshop_mentor')
+# class UsersMentor(models.Model):
+#         users_mentor = models.ManyToManyField('workshop_mentor')
