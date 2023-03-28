@@ -1,5 +1,8 @@
 from rest_framework import serializers
-from .models import Workshop 
+from .models import Workshop
+from django.contrib.auth import get_user_model
+
+User = get_user_model() 
 
 class WorkshopSerializer(serializers.Serializer):
     id = serializers.ReadOnlyField()
@@ -10,7 +13,7 @@ class WorkshopSerializer(serializers.Serializer):
     created_at = serializers.DateTimeField(read_only=True)
     is_open = serializers.BooleanField()
     # mentor_num = serializers.IntegerField()
-    current_mentor_num = serializers.ReadOnlyField()
+    current_mentor_num = serializers.IntegerField()
     max_mentor_num = serializers.IntegerField()
     skills_choices = (
         ("python", "Python"),
@@ -21,13 +24,17 @@ class WorkshopSerializer(serializers.Serializer):
     )
     skills = serializers.ChoiceField(choices=skills_choices) ##check skill's max length with what Bunny has
     ### multipleChoiceField(choices=skills_choices) OR choiceField
-    owner = serializers.ReadOnlyField(source='owner.id')
+    owner = serializers.IntegerField(read_only=True,source='owner.id')
+    # owner = serializers.PrimaryKeyRelatedField(
+    #     queryset=User.objects.all(),
+    #     required=True,
+    # )
 
     def create(self,validated_data):
         return Workshop.objects.create(**validated_data)
 
 # class WorkshopDetailSerializer(serializers.Serializer):
-class WorkshopDetailSerializer(serializers.Serializer):
+class WorkshopDetailSerializer(WorkshopSerializer):
     def update(self, instance, validated_data):
         instance.title = validated_data.get('title', instance.title)
         instance.workshop_date = validated_data.get('workshop_date', instance.workshop_date)

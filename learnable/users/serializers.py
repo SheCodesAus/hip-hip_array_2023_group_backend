@@ -19,6 +19,7 @@ class UserSerializer(serializers.ModelSerializer):
             "is_javascript_mentor",
             "is_htmlcss_mentor",
         ]
+        id = serializers.ReadOnlyField()
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)

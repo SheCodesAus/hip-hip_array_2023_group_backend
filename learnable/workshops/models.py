@@ -34,14 +34,6 @@ class Workshop(models.Model):
     current_mentor_num = models.IntegerField()
     max_mentor_num = models.IntegerField()
 
-    # @property
-    # def current_mentor_num(self):
-    #     return self.workshop.objects.aggregate(Count('mentor_num'))
-
-    # @current_mentor_num.setter
-    # def current_mentor_num(self, value):
-    #     pass
-
     owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -51,3 +43,11 @@ class Workshop(models.Model):
     # class WorkshopMentor(models.Model):
     #     workshop_mentor = models.ManyToManyField('users_mentor')
      
+
+  # @property
+    # def current_mentor_num(self):
+    #     return self.workshop.objects.aggregate(Count('mentor_num'))
+
+    # @current_mentor_num.setter
+    # def current_mentor_num(self, value):
+    #     pass
