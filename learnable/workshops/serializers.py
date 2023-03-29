@@ -12,8 +12,7 @@ class WorkshopSerializer(serializers.Serializer):
     image = serializers.URLField()
     created_at = serializers.DateTimeField(read_only=True)
     is_open = serializers.BooleanField()
-    # mentor_num = serializers.IntegerField()
-    current_mentor_num = serializers.IntegerField()
+    # current_mentor_num = serializers.ReadOnlyField()
     max_mentor_num = serializers.IntegerField()
     skills_choices = (
         ("python", "Python"),
@@ -42,9 +41,22 @@ class WorkshopDetailSerializer(WorkshopSerializer):
         instance.image = validated_data.get('image', instance.image)
         instance.created_at = validated_data.get('created_at', instance.created_at)
         instance.is_open = validated_data.get('is_open', instance.is_open)
-        instance.current_mentor_num = validated_data.get('current_mentor_num', instance.current_mentor_num)
+        # instance.current_mentor_num = validated_data.get('current_mentor_num', instance.current_mentor_num)
         instance.max_mentor_num = validated_data.get('max_mentor_num', instance.max_mentor_num)
         instance.owner = validated_data.get('owner', instance.owner)
         instance.save()
         return instance
  
+## attempting to make current_mentor_count work
+# class WorkshopSignupsSerializer(serializers.Serializer):
+#     workshops = serializers.ReadOnlyField()
+#     mentor = serializers.ReadOnlyField()
+#     created_at = serializers.DateTimeField(read_only=True)
+#     current_mentor_num = serializers.ReadOnlyField()
+    
+# class WorkshopSignupsDetailSerializer(WorkshopSignupsSerializer):
+#     def update(self, instance, validated_data):
+#         instance.workshops = validated_data.get('workshops', instance.workshops)
+#         instance.mentor = validated_data.get('mentor', instance.mentor)
+#         instance.created_at = validated_data.get('created_at', instance.created_at)
+#         instance.current_mentor_num = validated_data.get('current_mentor_num', instance.current_mentor_num)

@@ -2,11 +2,11 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.db.models import Count
 
+
 User = get_user_model() 
 
 # Create your models here.
 class Workshop(models.Model):
-    '''DONE - align the attribute names in 'skills' with Bunny's names'''
     skills_choices = (
         ("python", "Python"),
         ("django", "Django"),
@@ -31,7 +31,7 @@ class Workshop(models.Model):
         auto_now_add=True
     )
     is_open = models.BooleanField()
-    current_mentor_num = models.IntegerField()
+    # current_mentor_num = models.IntegerField()
     max_mentor_num = models.IntegerField()
 
     owner = models.ForeignKey(
@@ -39,15 +39,23 @@ class Workshop(models.Model):
         on_delete=models.CASCADE,
         related_name="workshop_owner",
     ) 
+    
+## attempting to make current_mentor_count work
 
-    # class WorkshopMentor(models.Model):
-    #     workshop_mentor = models.ManyToManyField('users_mentor')
-     
+# class WorkshopSignups(models.Model):
+#     workshops = models.ForeignKey(
+#         Workshop,
+#         on_delete=models.CASCADE,
+#         related_name="current_mentor_num"
+#     )
+#     mentor = models.ForeignKey(
+#         User,
+#         on_delete=models.CASCADE,
+#         related_name="current_mentor_num"
+#     )
+#     created_at = models.DateTimeField(auto_now_add=True)
+    
+#     class Meta:
+#         unique_together = ('workshops', 'mentor')
 
-  # @property
-    # def current_mentor_num(self):
-    #     return self.workshop.objects.aggregate(Count('mentor_num'))
-
-    # @current_mentor_num.setter
-    # def current_mentor_num(self, value):
-    #     pass
+#     current_mentor_num = mentor.objects.count()
