@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from users.serializers import UserSerializer
 from .models import Workshop
 from django.contrib.auth import get_user_model
 
@@ -13,22 +14,27 @@ class WorkshopSerializer(serializers.Serializer):
     created_at = serializers.DateTimeField(read_only=True)
     is_open = serializers.BooleanField()
     # mentor_num = serializers.IntegerField()
-    current_mentor_num = serializers.IntegerField()
     max_mentor_num = serializers.IntegerField()
-    skills_choices = (
-        ("python", "Python"),
-        ("django", "Django"),
-        ("react", "React"),
-        ("javascript", "JavaScript"),
-        ("htmlcss", "HTML/CSS"),
-    )
-    skills = serializers.ChoiceField(choices=skills_choices) ##check skill's max length with what Bunny has
+    # skills_choices = (
+    #     ("python", "Python"),
+    #     ("django", "Django"),
+    #     ("react", "React"),
+    #     ("javascript", "JavaScript"),
+    #     ("htmlcss", "HTML/CSS"),
+    # )
+    # skills = serializers.ChoiceField(choices=skills_choices) ##check skill's max length with what Bunny has
     ### multipleChoiceField(choices=skills_choices) OR choiceField
+    is_python_mentor = serializers.BooleanField(default=False)
+    is_django_mentor = serializers.BooleanField(default=False)
+    is_react_mentor = serializers.BooleanField(default=False)
+    is_javascript_mentor = serializers.BooleanField(default=False)
+    is_htmlcss_mentor = serializers.BooleanField(default=False)
     owner = serializers.IntegerField(read_only=True,source='owner.id')
     # owner = serializers.PrimaryKeyRelatedField(
     #     queryset=User.objects.all(),
     #     required=True,
     # )
+    current_mentor_num = UserSerializer(many=True,read_only=True)
 
     def create(self,validated_data):
         return Workshop.objects.create(**validated_data)
