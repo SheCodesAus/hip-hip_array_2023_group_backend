@@ -53,3 +53,8 @@ class UserDetail(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors)
+
+    def delete(self, request, pk):
+        user = self.get_object(pk)
+        user.delete()
+        return Response()
