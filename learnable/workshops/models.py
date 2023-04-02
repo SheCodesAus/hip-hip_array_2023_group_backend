@@ -1,25 +1,11 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.db.models import Count
 
 User = get_user_model() 
-
 # Create your models here.
 class Workshop(models.Model):
-    '''DONE - align the attribute names in 'skills' with Bunny's names'''
-    # skills_choices = (
-    #     ("python", "Python"),
-    #     ("django", "Django"),
-    #     ("react", "React"),
-    #     ("javascript", "JavaScript"),
-    #     ("htmlcss", "HTML/CSS"),
-    # )
-    # skills = models.CharField(
-    #     max_length=100,
-    #     choices=skills_choices,
-    #     default=None,
-    #     blank=False, 
-    #     null=True, ## if django breaks change this to False
-    # )
+    id = models.UUIDField(primary_key=True,blank=True)
     is_python_mentor = models.BooleanField(default=False)
     is_django_mentor = models.BooleanField(default=False)
     is_react_mentor = models.BooleanField(default=False)
@@ -35,23 +21,42 @@ class Workshop(models.Model):
         auto_now_add=True
     )
     is_open = models.BooleanField()
-    # current_mentor_num = models.IntegerField()
     max_mentor_num = models.IntegerField()
-
     owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name="workshop_owner",
     ) 
-    current_mentor_num = models.ManyToManyField(
+    mentors = models.ManyToManyField(  # ValueError: "<Workshop: Workshop object (None)>" needs to have a value for field "id" before this many-to-many relationship can be used.
         User,
-        related_name='mentor_counter'
+        verbose_name='workshops',
+        blank=True,
+        default='there are currently no mentors',
     )
-  
-  # @property
-    # def current_mentor_num(self):
-    #     return self.workshop.objects.aggregate(Count('mentor_num'))
+    mentor_count = models.PositiveIntegerField(default=0)
 
-    # @current_mentor_num.setter
-    # def current_mentor_num(self, value):
-    #     pass
+    def save(self, *args, **kwargs):
+        self.mentor_count = self.mentors.count()
+        super().save(*args, **kwargs)
+
+    
+#attempting workshop_mentor model to store list of users who have signed up
+# class WorkshopMentors(models.Model):
+#     mentor_applied = models.BooleanField()
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     workshops = models.ForeignKey(
+#         Workshop,
+#         on_delete=models.CASCADE,
+#         related_name="current_mentor_num"
+#     )
+#     mentor = models.ForeignKey(
+#         User,
+#         on_delete=models.CASCADE,
+#         related_name="current_mentor_num"
+#     )
+#     current_mentor_num = models.ManyToManyField(
+#         User,
+#         related_name='mentor_counter'
+#     )
+#     class Meta:
+#         unique_together = ('workshops', 'mentor')
