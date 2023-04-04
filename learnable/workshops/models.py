@@ -1,11 +1,9 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from django.db.models import Count
 
 User = get_user_model() 
-# Create your models here.
+
 class Workshop(models.Model):
-    # id = models.UUIDField(primary_key=True,blank=True)
     is_python_mentor = models.BooleanField(default=False)
     is_django_mentor = models.BooleanField(default=False)
     is_react_mentor = models.BooleanField(default=False)
@@ -27,38 +25,15 @@ class Workshop(models.Model):
         on_delete=models.CASCADE,
         related_name="workshop_owner",
     ) 
-    mentors = models.ManyToManyField(  # ValueError: "<Workshop: Workshop object (None)>" needs to have a value for field "id" before this many-to-many relationship can be used.
+    mentors = models.ManyToManyField( 
         User,
         related_name='workshops',
         blank=True,
     )
-    # mentor_count = models.PositiveIntegerField(default=0)
 
     def save(self, *args, **kwargs):
-        # self.mentor_count = self.mentors.count() # can call anytimie without saving as a field in models.py
         super().save(*args, **kwargs)
 
     @property
     def mentor_count(self):
-        return self.mentors.count #lower case count with no bracket fine if looking at1 or 2 models. For large modesl, use Count() from import so annotate can be used
-    
-#attempting workshop_mentor model to store list of users who have signed up
-# class WorkshopMentors(models.Model):
-#     mentor_applied = models.BooleanField()
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     workshops = models.ForeignKey(
-#         Workshop,
-#         on_delete=models.CASCADE,
-#         related_name="current_mentor_num"
-#     )
-#     mentor = models.ForeignKey(
-#         User,
-#         on_delete=models.CASCADE,
-#         related_name="current_mentor_num"
-#     )
-#     current_mentor_num = models.ManyToManyField(
-#         User,
-#         related_name='mentor_counter'
-#     )
-#     class Meta:
-#         unique_together = ('workshops', 'mentor')
+        return self.mentors.count 

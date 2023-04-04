@@ -25,23 +25,7 @@ class WorkshopSerializer(serializers.Serializer):
     def create(self,validated_data):
         return Workshop.objects.create(**validated_data)
 
-#attempting workshop_mentor serializer to store list of users who have signed up
-# class WorkshopMentorsSerializer(serializers.Serializer):
-#     id = serializers.ReadOnlyField()
-#     mentor_applied = serializers.DateTimeField()
-#     created_at = serializers.DateTimeField(read_only=True)
-#     workshops = serializers.ReadOnlyField(source='workshop.id')
-#     mentor = serializers.ReadOnlyField(source='user.id')
-#     current_mentor_num = UserSerializer(many=True,read_only=True)
-#     unique_together = serializers.ReadOnlyField()
-
-#     def create(self,validated_data):
-#         return WorkshopMentors.objects.create(**validated_data)
-
-# added mentors as a dictionary(?) in WorkshopDetailSerializer
 class WorkshopDetailSerializer(WorkshopSerializer):
-    # mentors = WorkshopMentorsSerializer(many=True, read_only=True)
-
     def update(self, instance, validated_data):
         instance.title = validated_data.get('title', instance.title)
         instance.workshop_date = validated_data.get('workshop_date', instance.workshop_date)

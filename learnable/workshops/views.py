@@ -9,7 +9,6 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model() 
 
-# Create your views here.
 class WorkshopList(APIView):
     def get(self, request):
         workshops = Workshop.objects.all()
@@ -19,7 +18,6 @@ class WorkshopList(APIView):
         )
        
     def post(self, request):
-        # request.data['owner'] = request.user.id
         serializer = WorkshopSerializer(data=request.data)
         if serializer.is_valid():
             print(serializer.validated_data)
@@ -42,7 +40,6 @@ class WorkshopDetail(APIView):
     def get_object(self,workshop_pk):
         try:
             workshop = Workshop.objects.get(pk=workshop_pk)
-            # self.check_object_permissions(self.request, workshop)
             return workshop
         except Workshop.DoesNotExist:
             raise Http404
@@ -55,10 +52,8 @@ class WorkshopDetail(APIView):
     def post(self, request, workshop_pk):
         user = request.user
         workshop = Workshop.objects.get(pk=workshop_pk)
-        # print(user.is_python_mentor)
-        # print(workshop.is_python_mentor)
         
-        def skills_workshop_match(workshop,user):    #use and and not == as flase == false and will return true
+        def skills_workshop_match(workshop,user):  
             if workshop.is_python_mentor and user.is_python_mentor:
                 return True
             elif workshop.is_django_mentor and user.is_django_mentor:
@@ -73,12 +68,8 @@ class WorkshopDetail(APIView):
                 return False
 
         if skills_workshop_match(workshop, user):
-            # serializer = WorkshopSerializer(data=request.data)
-            # if serializer.is_valid():
-            #     serializer.save()
-            workshop.mentors.add(user) #add delete method and call .remove(user)
+            workshop.mentors.add(user)
             return Response(
-                    # serializer.data,
                 {"result":"You have successfully signed up as a mentor"},
                 status=status.HTTP_200_OK
             )
@@ -87,20 +78,20 @@ class WorkshopDetail(APIView):
             status=status.HTTP_400_BAD_REQUEST
         )
 
-
-
-    # def delete(self, request, workshop_pk):
-    #     workshop = self.get_object(workshop_pk)
-    #     if workshop.owner == request.user:
-    #         workshop.delete()
-    #         return Response(
-    #             {"data": {"result":"workshop has been deleted"}},
-    #             status=status.HTTP_200_OK
-    #         )
-    #     return Response(
-    #     {"result":"Unsuccessful - Workshop can only be deleted by the owner."},
-    #     status=status.HTTP_400_BAD_REQUEST,
-    #     )
+    def delete(self, request, workshop_pk):
+        user = request.user
+        workshop = Workshop.objects.get(pk=workshop_pk)
+        try:
+            workshop.mentors.remove(user)
+            return Response(
+                {"result":"You have been removed as a mentor"},
+                status=status.HTTP_200_OK
+            )
+        except:
+            raise Response(
+                {"result":"Unsuccessful - Please try again."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
       
 
