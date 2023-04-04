@@ -10,14 +10,16 @@ class User(AbstractUser):
     is_javascript_mentor = models.BooleanField(default=False)
     is_htmlcss_mentor = models.BooleanField(default=False)
 
-    USERNAME_FIELD = 'username'
+    USERNAME_FIELD = "username"
     REQUIRED_FIELDS = []
 
     def __str__(self):
         return self.username
 
-    @property
-    def email(self):
-        return self.username
+    # @property
+    # def email(self):
+    #     return self.username
+
+
 # class UsersMentor(models.Model):
 #         users_mentor = models.ManyToManyField('workshop_mentor')
