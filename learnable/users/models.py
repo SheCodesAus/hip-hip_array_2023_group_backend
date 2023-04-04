@@ -16,9 +16,9 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
 
-    @property
-    def email(self):
-        return self.username
+    # @property
+    # def email(self):
+    #     return self.username
 
 
 # class UsersMentor(models.Model):
