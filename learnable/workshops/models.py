@@ -1,26 +1,14 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from django.db.models import Count
 
 User = get_user_model() 
 
-# Create your models here.
 class Workshop(models.Model):
-    '''DONE - align the attribute names in 'skills' with Bunny's names'''
-    skills_choices = (
-        ("python", "Python"),
-        ("django", "Django"),
-        ("react", "React"),
-        ("javascript", "JavaScript"),
-        ("htmlcss", "HTML/CSS"),
-    )
-    skills = models.CharField(
-        max_length=100,
-        choices=skills_choices,
-        default=None,
-        blank=False, 
-        null=True, ## if django breaks change this to False
-    )
+    is_python_mentor = models.BooleanField(default=False)
+    is_django_mentor = models.BooleanField(default=False)
+    is_react_mentor = models.BooleanField(default=False)
+    is_javascript_mentor = models.BooleanField(default=False)
+    is_htmlcss_mentor = models.BooleanField(default=False)
     title = models.CharField(
         max_length=200,
     )
@@ -31,23 +19,21 @@ class Workshop(models.Model):
         auto_now_add=True
     )
     is_open = models.BooleanField()
-    current_mentor_num = models.IntegerField()
     max_mentor_num = models.IntegerField()
-
     owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name="workshop_owner",
     ) 
+    mentors = models.ManyToManyField( 
+        User,
+        related_name='workshops',
+        blank=True,
+    )
 
-    # class WorkshopMentor(models.Model):
-    #     workshop_mentor = models.ManyToManyField('users_mentor')
-     
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
 
-  # @property
-    # def current_mentor_num(self):
-    #     return self.workshop.objects.aggregate(Count('mentor_num'))
-
-    # @current_mentor_num.setter
-    # def current_mentor_num(self, value):
-    #     pass
+    @property
+    def mentor_count(self):
+        return self.mentors.count 
