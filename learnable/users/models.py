@@ -4,7 +4,6 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     username = models.EmailField(unique=True, null=True)
-    last_login = None
     is_python_mentor = models.BooleanField(default=False)
     is_django_mentor = models.BooleanField(default=False)
     is_react_mentor = models.BooleanField(default=False)
@@ -17,5 +16,8 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
 
+    @property
+    def email(self):
+        return self.username
 # class UsersMentor(models.Model):
 #         users_mentor = models.ManyToManyField('workshop_mentor')
